@@ -6,7 +6,7 @@ BitTorrent library for encoding and decoding torrents in PHP language.
 ```
 <?php
 
-include('Bdecoder.php');
+include('src/Bdecoder.php');
 
 $bdecoder = new Bdecoder();
 $torrent  = file_get_contents("/path/to/torrent.torrent");
@@ -18,7 +18,7 @@ $bdecoded = $bdecoder->decode($torrent);
 ```
 <?php
 
-include('Bencoder.php');
+include('src/Bencoder.php');
 
 $bencoder = new Bencoder();
 $bencoded = $bencoder->encode([
