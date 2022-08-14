@@ -52,6 +52,14 @@ class BdecoderTest extends TestCase
         $this->assertEquals($actual, $expect);
     }
 
+    public function testBdecodeInvalidDictionary()
+    {
+        $dictionary = 'di4ei4ee';
+        $expect = null;
+        $actual = (new Bdecoder())->decode($dictionary);
+        $this->assertEquals($actual, $expect);
+    }
+
     public function testBdecodeBrokenDictionary()
     {
         $dictionary = 'd';
@@ -116,11 +124,27 @@ class BdecoderTest extends TestCase
         $this->assertEquals($actual, $expect);
     }
 
+    public function testBdecodeInvalidString()
+    {
+        $string = '-1:ab';
+        $expect = null;
+        $actual = (new Bdecoder())->decode($string);
+        $this->assertEquals($actual, $expect);
+    }
+
     public function testBdecodeFromInvalidOffset()
     { 
         $list = 'li1024ei2048ee';
         $expect = null;
         $actual = (new Bdecoder())->decode($list, 100);
+        $this->assertEquals($actual, $expect);
+    }
+
+    public function testBdecodeFromValidOffset()
+    {
+        $list = 'l3:leee';
+        $expect = [6, 'lee'];
+        $actual = (new Bdecoder())->decode($list, 1);
         $this->assertEquals($actual, $expect);
     }
 }

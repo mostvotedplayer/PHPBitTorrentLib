@@ -62,20 +62,17 @@ class Bencoder
          $index = key($data);
          if (is_string($index)) {
              ksort($data, SORT_STRING);
-             $isDict = true;
              $isList = false;
           } elseif (is_integer($index)) {
              ksort($data, SORT_NUMERIC);
-             $isDict = false;
              $isList = true;
           } else {
-             $isDict = false;
              $isList = true;
           }
 
           $buffer = '';
           foreach ($data as $index => $value) {
-              if ($isDict) {
+              if ($isList === false) {
                   if (is_integer($index)) {
                       return null;
                   }
