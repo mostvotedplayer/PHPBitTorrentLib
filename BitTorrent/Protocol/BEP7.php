@@ -25,27 +25,27 @@
 namespace BitTorrent\Protocol;
 
 /**
- * BEP23.
+ * BEP7.
  *
  * The purpose of this class is to provide helper functions to aid in parsing and creating a compact peerlist for
- * just ipv4 addresses.
+ * just ipv6 addresses.
  *
- * @see http://bittorrent.org/beps/bep_0023.html
+ * @see http://bittorrent.org/beps/bep_0007.html
  */
-class BEP23
+class BEP7
 {
     /**
      * Create a compact peer list.
      *
-     * @param  array       $peers A list of dictionaries containing the ip and port.
+     * @param  array       $peers A list of dictionaries containg the ip and port.
      * @return string|null        A compact peerlist or null on failure.
      */
-    public function toCompactV4(array $peers) : ?string
+    public function toCompactV6(array $peers) : ?string
     {
         $result = '';
         foreach ($peers as $peer) {
             if (isset($peer['ip'])) {
-                if (! filter_var($peer['ip'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+                if (! filter_var($peer['ip'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
                     return null;
                 }
             } else {
@@ -62,27 +62,27 @@ class BEP23
         }
         return $result;
     }
-
+ 
     /**
      * Decode a compact peer list.
      *
-     * @param  string     $peers A compact peerlist. 
+     * @param  string     $peers A compact peerlist.
      * @return array|null        A list of dictionaries containing the ip and port or null on failure.
      */
-    public function fromCompactV4(string $peers) : ?array
+    public function fromCompactV6(string $peers) : ?array
     {
         $length = strlen($peers);
-        if ($length % 6 !== 0) {
+        if ($length % 18 !== 0) {
             return null;
         }
         $peerlist = [];
-        for ($i = 0; $i < $length; $i += 6) {
-            $ip = substr($peers, $i, 4);
+        for ($i = 0; $i < $length; $i += 18) {
+            $ip = substr($peers, $i, 16);
             $ip = inet_ntop($ip);
             if ($ip === false) {
                 return null;
             }
-            $port = substr($peers, $i + 4, 2);
+            $port = substr($peers, $i + 16, 2);
             $port = unpack('n', $port);
             if ($port === false) {
                 return null;
