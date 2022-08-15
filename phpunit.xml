@@ -3,6 +3,7 @@
          xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/6.5/phpunit.xsd"
          beStrictAboutOutputDuringTests="true"
          beStrictAboutTodoAnnotatedTests="true"
+         bootstrap="tests/bootstrap.php"
          verbose="true">
     <testsuite name="default">
         <directory suffix="Test.php">tests</directory>

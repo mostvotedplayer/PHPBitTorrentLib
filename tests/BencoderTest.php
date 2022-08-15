@@ -1,14 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use BitTorrent\Encoding\Bencoder;
 
 class BencoderTest extends TestCase
 {
-    public function setUp() : void
-    {
-        include_once("src/Bencoder.php");
-    }
-
     public function testBencodeEmptyArray()
     {
         $array = [];

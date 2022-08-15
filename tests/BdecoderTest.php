@@ -1,14 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use BitTorrent\Encoding\Bdecoder;
 
 class BdecoderTest extends TestCase
 {
-    public function setUp() : void
-    { 
-        include_once("src/Bdecoder.php");
-    }
-
     public function testBdecodeEmptyDictionary()
     {
         $dictionary = 'de';
