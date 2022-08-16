@@ -87,7 +87,7 @@ class BEP7
             if ($port === false) {
                 return null;
             }
-            $peerlist[] = ['ip' => $ip, 'port' => $port];
+            $peerlist[] = ['ip' => $ip, 'port' => $port[1]];
         }
         return $peerlist;
     }
