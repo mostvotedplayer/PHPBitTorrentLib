@@ -72,6 +72,14 @@ class BdecoderTest extends TestCase
         $this->assertEquals($actual, $expect);
     }
 
+    public function testBdecodeListWithStringOverflow()
+    { 
+       $list = "l4:test" . str_repeat("\x00", 1024) . 'e';
+       $expect = null;
+       $actual = (new Bdecoder())->decode($list);
+       $this->assertEquals($actual, $expect);
+    }
+
     public function testBdecodePositiveInteger()
     {
         $integer = 'i1024e';
@@ -116,6 +124,22 @@ class BdecoderTest extends TestCase
     {
         $string = '4:spam';
         $expect = [6, 'spam'];
+        $actual = (new Bdecoder())->decode($string);
+        $this->assertEquals($actual, $expect);
+    }
+
+    public function testBdecodeStringWithWrongLength()
+    {
+        $string = '1024:test';
+        $expect = null;
+        $actual = (new Bdecoder())->decode($string);
+        $this->assertEquals($actual, $expect);
+    }
+
+    public function testBdecodeStringWithLengthAndNoValue()
+    {
+        $string = '4096:';
+        $expect = null;
         $actual = (new Bdecoder())->decode($string);
         $this->assertEquals($actual, $expect);
     }
