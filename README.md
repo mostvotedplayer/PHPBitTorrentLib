@@ -84,7 +84,29 @@ array(
 )
 ```
 
-## Bencoder example.
+## Bencoder
+
+The bencoder maps PHP data types to specific functionality within the Bencoder class as seen below:
+
+array    -> encodeArr
+
+integer  -> encodeInt
+
+string   -> encodeStr
+
+nulll    -> encodeStr
+
+In PHP an array can be a dictionary, list or even mixed as per:
+
+dictionary: ["key" => "val"]
+
+list:       [1,2,3,4,5]
+
+mixed:      [1, "key" => "val"]
+
+Many bencoding libraries in PHP seem to allow mixed arrays to be encoded which would generate invalid Bencoding, this library only accepts true dictionaries or lists and rejects mixed arrays.
+
+##### Encoding a dictionary
 
 ```
 <?php
@@ -92,10 +114,42 @@ array(
 include('BitTorrent/Encoding/Bencoder.php');
 
 $bencoder = new BitTorrent\Encoding\Bencoder();
-$bencoded = $bencoder->encode([
+$bencoded = $bencoder->encodeArr([
     'apples' => 1,
     'pears'  => 2
 ]);
 ```
+
+##### Encoding a list
+
+```
+$bencoded = $bencoder->encodeArr([1,2,3,4,5]);
+var_dump($bencoded);
+```
+
+##### Encoding a string
+
+```
+$bencoded = $bencoder->encodeStr("foo");
+var_dump($bencoded);
+```
+
+##### Encode int
+
+```
+$bencoded = $bencoder->encodeInt(PHP_INT_MAX);
+var_dump($bencoded);
+```
+
+##### Encode null
+
+```
+$bencoded = $bencoder->encode(null);
+var_dump($bencoded);
+```
+
+If you are unsure what data your dealing with then simply just pass the data to encode method and it will determine the output for you.
+
+## Testing
 
 UnitTests can be located in tests directory.
